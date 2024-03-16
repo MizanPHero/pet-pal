@@ -1,19 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import PetNavbar from "./components/Navbar/Navbar";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import Footer from "./components/Footer/Footer";
-import Home from "./pages/Home/Home";
+import PetNavbar from "./components/Navbar/Navbar";
+import ScrollToTopNavigation from "./components/ScrollToTop/ScrollToTop";
 import About from "./pages/About/About";
+import AddPet from "./pages/AddPet/AddPet";
+import EditPet from "./pages/AddPet/EditPet";
 import AllCats from "./pages/AllCats/AllCats";
 import AllDogs from "./pages/AllDogs/AllDogs";
+import Home from "./pages/Home/Home";
+import PetDetail from "./pages/PetDetail/PetDetail";
+import Profile from "./pages/Profile/Profile";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
-import Profile from "./pages/Profile/Profile";
-import PetDetail from "./pages/PetDetail/PetDetail";
-import { useState } from "react";
 import { verifyUser } from "./services/users";
-import { useEffect } from "react";
-import "./App.css";
-import ScrollToTopNavigation from "./components/ScrollToTop/ScrollToTop";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -40,6 +41,9 @@ export default function App() {
         <Route path="/profile" element={<Profile user={user} />} />
         <Route path="allcats/:id" element={<PetDetail user={user} />} />
         <Route path="alldogs/:id" element={<PetDetail user={user} />} />
+        <Route path="edit-pet/:id" element={<EditPet user={user} />} />
+        <Route path="addpet" element={<AddPet user={user} />} />
+
       </Routes>
       <Footer />
     </div>

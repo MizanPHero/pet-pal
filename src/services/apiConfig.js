@@ -13,7 +13,8 @@ const getTokenLikes = () => {
 };
 
 export const api = axios.create({
-  baseURL: "https://pet-pals-5f9adeeaa392.herokuapp.com/",
+  // baseURL: "https://pet-pals-5f9adeeaa392.herokuapp.com/",
+  baseURL: "http://127.0.0.1/animal/",
 });
 
 api.interceptors.request.use(

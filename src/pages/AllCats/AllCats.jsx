@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getCats } from '../../services/cats';
-import { PetPreview } from '../../components/PetPreview/PetPreview';
-import './AllCats.css';
 import CatHero from '../../components/CatHero/CatHero';
+import { PetPreview } from '../../components/PetPreview/PetPreview';
+import { getCats } from '../../services/cats';
+import './AllCats.css';
 
 const AllCats = () => {
   const [catBreeds, setCatBreeds] = useState([]);
@@ -64,7 +64,7 @@ const AllCats = () => {
       </div>
 
       <div className="card-container">
-        {catBreeds.map((breed) => (
+        {catBreeds?.map((breed) => (
           filterCats(breed) && <PetPreview key={breed.id} breed={breed} />
         ))}
       </div>

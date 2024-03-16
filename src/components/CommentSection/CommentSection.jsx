@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUsers, addComment, editComment } from "../../services/users";
 import { useNavigate } from "react-router-dom";
+import { addComment, editComment, getUsers } from "../../services/users";
 import "./CommentSection.css";
 
 export default function CommentSection({ comments, postId, user, setToggle }) {
@@ -21,11 +21,14 @@ export default function CommentSection({ comments, postId, user, setToggle }) {
     }
     fetchUsers();
   }, [showEditForm]);
+  
 
   const getUsername = (id) => {
     const user = users.filter((user) => user.id === id);
     return user[0]?.username;
   };
+  // console.log(getUsername);
+  // console.log(users);
 
   const formatDate = (date) => {
     const dateArr = date.split("-");
@@ -116,6 +119,8 @@ export default function CommentSection({ comments, postId, user, setToggle }) {
     }));
   };
 
+  // console.log(newComment);
+
   const handleSubmitAdd = async (e) => {
     e.preventDefault();
     await addComment(newComment);
@@ -130,7 +135,7 @@ export default function CommentSection({ comments, postId, user, setToggle }) {
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
-    await editComment(newComment.id, newComment);
+    await editComment(newComment).then((result) => {console.log(result);});
     delete newComment.id;
     setNewComment({
       text: "",

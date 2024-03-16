@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import './SignUp.css'
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { signUp } from "../../services/users";
+import './SignUp.css';
 
 const SignUp = (props) => {
   const navigate = useNavigate()
@@ -26,10 +27,26 @@ const SignUp = (props) => {
   const onSignUp = async (event) => {
     event.preventDefault()
     try {
-      const token = await signUp(form)
-      if (token) {
-        navigate('/signin')
+      const data = await signUp(form);
+
+      if(!data.error){
+        toast.success(`Edited Successfully!`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          closeButton: false,
+        });
+        navigate("/signin")
       }
+      
+      // if (token) {
+      //   navigate('/signin')
+      // }
     } catch (error) {
       console.error(error)
       setForm({
@@ -124,6 +141,7 @@ const SignUp = (props) => {
           Already have an Account? <Link to="/signin" className="underline">Sign In</Link>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

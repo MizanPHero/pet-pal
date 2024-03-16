@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './Profile.css';
-import { getUsers } from '../../services/users';
-import { deleteLikedPost } from '../../services/dogs';
-import { getPosts } from '../../services/cats';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getPosts } from '../../services/cats';
+import { deleteLikedPost } from '../../services/dogs';
+import { getUsers } from '../../services/users';
+import './Profile.css';
 
 
 
@@ -13,10 +14,11 @@ const UserProfile = ({ user }) => {
   const [likes, setLikes] = useState([]);
   const [users, setUsers] = useState([]);
   const [loggedUser, setLoggedUser] = useState([]);
+  const navigate = useNavigate();
 
-  console.log('Like:', likes);
-  console.log('LoggedUser:', loggedUser);
-  console.log('Favorites:', favorites[0]);
+  // console.log('Like:', likes);
+  // console.log('LoggedUser:', loggedUser);
+  // console.log('Favorites:', favorites);
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -58,6 +60,7 @@ const UserProfile = ({ user }) => {
 
   const fetchPetById = async (id) => {
     const pet = await getPosts(id);
+    console.log(pet);
     return pet;
   };
 
@@ -69,6 +72,7 @@ const UserProfile = ({ user }) => {
       if (likeToDelete) {
         // Delete the liked post on the server using its id
         await deleteLikedPost(likeToDelete.id);
+        // console.log(likeToDelete.id);
   
         // Remove the liked post from the likes state
         const updatedLikes = likes.filter(
@@ -103,7 +107,12 @@ const UserProfile = ({ user }) => {
   return (
     <div className='user-profile'>
       <ToastContainer />
-      <h1>Welcome, {user?.username}!</h1>
+      <div className='flex items-center justify-between'>
+        <h1>Welcome, {user?.username}!</h1>
+        <h1 className='px-6 py-2 text-white bg-blue-600 rounded-xl hover:bg-blue-400'>
+          <Link to={'/addpet'}>Add Pet</Link>
+        </h1>
+      </div>
       <div className='user-favorites'>
         <h1>Favorite Pals</h1>
         <div className='favorite-images'>
@@ -112,19 +121,19 @@ const UserProfile = ({ user }) => {
       )}
           {favorites?.map((favorite, index) => (
             <div className='favorite-image' key={index}>
-              <img src={favorite.image} alt={favorite.name} />
+              <img src={favorite[0].image} alt={favorite.name} />
               <div className='image-info'>
                 <p>
-                  <b>Name:</b> {favorite.name}
+                  <b>Name:</b> {favorite[0].name}
                 </p>
                 <p>
-                  <b>Age:</b> {favorite.age}
+                  <b>Age:</b> {favorite[0].age}
                 </p>
                 <p>
-                  <b>Description:</b> {favorite.description}
+                  <b>Description:</b> {favorite[0].description}
                 </p>
               </div>
-              <button onClick={() => handleDelete(favorite.id)}>
+              <button onClick={() => handleDelete(favorite[0].id)}>
                 {' '}
                 Remove{' '}
               </button>

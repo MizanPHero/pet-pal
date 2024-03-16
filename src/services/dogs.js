@@ -1,8 +1,8 @@
-import { api, apiLikes } from "./apiConfig";
+import { api } from "./apiConfig";
 
 export const getDogs = async () => {
   try {
-    const response = await api.get("/dogs-cats/dogs");
+    const response = await api.get("/get_dog.php");
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,8 @@ export const getDogs = async () => {
 
 export const deleteLikedPost = async (id) => {
   try {
-    const response = await apiLikes.delete(`/like/${id}`);
+    const response = await api.post(`/remove_like.php?id=${id}`);
+    
     return response.data;
   } catch (error) {
     throw error;

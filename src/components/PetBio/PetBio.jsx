@@ -1,23 +1,25 @@
-import "./PetBio.css";
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getCat } from "../../services/cats";
-import { Button } from "@material-tailwind/react";
-import { likePost } from "../../services/users";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getCat } from "../../services/cats";
+import { likePost } from "../../services/users";
+import "./PetBio.css";
 
 export default function PetBio({ user }) {
   const [pet, setPet] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPet = async () => {
       const pet = await getCat(id);
-      setPet(pet);
+      setPet(pet[0]);
     };
     fetchPet();
   }, [id]);
+  // console.log(pet[0].name);
+  // console.log(typeof(pet));
 
   const emailButton = () => {
     const recipient = "inquiries@petpals.netlify.app";
@@ -30,8 +32,9 @@ export default function PetBio({ user }) {
   };
 
   const handleLikeToFav = async () => {
+    if (!user) navigate("/signin");
     await likePost({
-      user: user.id,
+      user: user?.id,
       post: id,
     });
 

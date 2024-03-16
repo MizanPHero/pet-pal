@@ -1,9 +1,8 @@
-import React from "react";
-import PetBio from "../../components/PetBio/PetBio";
-import CommentSection from "../../components/CommentSection/CommentSection";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CommentSection from "../../components/CommentSection/CommentSection";
+import PetBio from "../../components/PetBio/PetBio";
 import { getCat } from "../../services/cats";
-import { useState, useEffect } from "react";
 
 export default function PetDetail({ user }) {
   const [pet, setPet] = useState([]);
@@ -13,7 +12,7 @@ export default function PetDetail({ user }) {
   useEffect(() => {
     const fetchPet = async () => {
       const pet = await getCat(id);
-      setPet(pet);
+      setPet(pet[0]);
     };
     fetchPet();
   }, [id, toggle]);
