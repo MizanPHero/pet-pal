@@ -22,7 +22,7 @@ export default function PetBio({ user }) {
   // console.log(typeof(pet));
 
   const emailButton = () => {
-    const recipient = "inquiries@petpals.netlify.app";
+    const recipient = "primon201217@gmail.com";
     const subject = `Adoption Request - ${pet.name}`;
     const body = `Hello, I am interested in adopting ${pet.name}!`;
     const mailtoLink = `mailto:${encodeURIComponent(recipient)}
