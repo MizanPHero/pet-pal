@@ -27,6 +27,7 @@ export default function App() {
     fetchUser();
   }, []);
 
+
   return (
     <div className="App">
       <PetNavbar user={user} setUser={setUser} />

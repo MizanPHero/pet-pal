@@ -17,6 +17,8 @@ export const signIn = async (credentials) => {
     // localStorage.setItem("token", resp.data.token);
     localStorage.setItem("username", resp.data.user.username);
     localStorage.setItem("user_id", resp.data.user.id);
+    localStorage.setItem("user_email", resp.data.user.email);
+   
 
     return {
       id: resp.data.user.id,
@@ -64,10 +66,12 @@ export const verifyUser = async () => {
   // const token = localStorage.getItem("token");
   const id = localStorage.getItem("user_id");
   const username = localStorage.getItem("username");
+  const useremail = localStorage.getItem("user_email");
   if (username) {
     return {
       id,
       username,
+      useremail,
     };
   }
 };
@@ -77,6 +81,15 @@ export const addComment = async (comment) => {
   try {
     await api.post("/setup_comment.php", comment)
     // .then((result) => {console.log(result);});
+  } catch (error) {
+    throw error;
+  }
+};
+//email data
+export const sendEmail = async (data) => {
+  try {
+    await api.post("/buy_pet.php", data)
+    .then((result) => {console.log(result);});
   } catch (error) {
     throw error;
   }
